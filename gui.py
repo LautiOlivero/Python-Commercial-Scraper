@@ -82,7 +82,7 @@ class ScraperGUI:
     def handle_session_startup(self):
         if os.path.exists(EXPORT_FILE):
             response = messagebox.askyesno("Nueva Sesión", "¿Desea iniciar una nueva sesión?\n(Esto limpiará la lista actual, pero mantendrá el historial de backup)")
-            if response: # Si dice que sí, borramos el archivo de la sesión actual
+            if response:
                 try:
                     os.remove(EXPORT_FILE)
                 except Exception as e:
@@ -109,7 +109,7 @@ class ScraperGUI:
         try:
             data = extract_data(url)
             self.tree.insert("", tk.END, values=(data["title"], data["price"], data["stock"]))
-            self.tree.see(self.tree.get_children()[-1]) # Scroll al final
+            self.tree.see(self.tree.get_children()[-1])
             self.status_var.set("¡Éxito! Datos extraídos.")
             self.url_entry.delete(0, tk.END)
         except PermissionError as e:
@@ -145,7 +145,6 @@ class ScraperGUI:
         self.show_history_window()
 
     def show_history_window(self):
-        # Crear ventana secundaria
         history_win = tk.Toplevel(self.root)
         history_win.title("Extraction History")
         history_win.geometry("800x500")
@@ -153,10 +152,8 @@ class ScraperGUI:
         frame = ttk.Frame(history_win, padding="10")
         frame.pack(fill=tk.BOTH, expand=True)
         
-        # Título de la ventana
         ttk.Label(frame, text="Historial de Datos Guardados", font=("Arial", 12, "bold")).pack(pady=(0, 10))
         
-        # Tabla (Treeview) para el historial
         columns = ("title", "price", "stock")
         tree = ttk.Treeview(frame, columns=columns, show="headings")
         
@@ -168,14 +165,12 @@ class ScraperGUI:
         tree.column("price", width=100)
         tree.column("stock", width=100)
         
-        # Scrollbar
         scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=tree.yview)
         tree.configure(yscrollcommand=scrollbar.set)
         
         tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
-        # Cargar datos del CSV
         try:
             df = pd.read_csv(BACKUP_FILE)
             for _, row in df.iterrows():
@@ -185,7 +180,6 @@ class ScraperGUI:
             history_win.destroy()
             return
 
-        # Botón para cerrar
         ttk.Button(frame, text="Cerrar", command=history_win.destroy).pack(pady=10)
 
 def launch_gui():
