@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.gemini/
+.agent/
+.agents/
+
+# Data and Logs
+exportacion_datos.csv
+historial_completo.csv
+datos_extraidos.csv
+*.csv
+!sample_export.csv
+
+# IDEs
+.vscode/
+.idea/

@@ -1,0 +1,5 @@
+# Sample Export Data
+title,price,stock
+"Sample Product 1","$19.99","In stock"
+"Sample Product 2","$49.50","Out of stock"
+"Sample Product 3","$9.99","In stock"
